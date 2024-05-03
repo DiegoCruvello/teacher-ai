@@ -15,7 +15,7 @@ class OpenAiAdapter implements SendImageAdapterInterface
     ) {
     }
 
-    public function analyzeImage(InputCreateImage $dto): string
+    public function analyzeImage(InputCreateImage $dto): array
     {
         $body = [
             'model' => 'gpt-4-turbo',
@@ -25,7 +25,16 @@ class OpenAiAdapter implements SendImageAdapterInterface
                     'content' => [
                         [
                             'type' => 'text',
-                            'text' => 'Limite a resposta a 1500 caracteres, utilizando uma abordagem de GTO, avalie a jogada de poker mostrada na imagem. Considere as cartas da mão, as cartas comunitárias, as posições dos jogadores, o tamanho do pote, e as ações dos jogadores até o momento. Baseando-se em um range balanceado para os oponentes e a ação de jogo até agora, determine se a jogada realizada pelo jogador é ótima ou se existe uma alternativa preferível de acordo com o GTO. Forneça sua avaliação apenas sobre a qualidade da jogada.'
+                            'text' => 'Limite a resposta a 1500 caracteres,
+                            utilizando uma abordagem de GTO, avalie a jogada de poker mostrada na imagem.
+                            Considere as cartas da mão, as cartas comunitárias, as posições dos jogadores,
+                            o tamanho do pote, e as ações dos jogadores até o momento.
+                            Baseando-se em um range balanceado para os oponentes e a ação de jogo até agora,
+                            determine se a jogada realizada pelo jogador é ótima ou se existe uma alternativa preferível
+                            de acordo com o GTO. Forneça sua avaliação apenas sobre a qualidade da jogada. Ao final,
+                            dê-me a melhor sugestão para ser usada no Flop, Turn e River. Retorne um json e cada índice deve ser
+                            o flop, river e turn. Indíces adionais também podem ser criados para exibir mensagens para o usuário.
+                            Não precisa exemplificar que é um json, somente retornar um json com chave valor, somente.'
                         ],
                         [
                             'type' => 'image_url',
@@ -44,7 +53,9 @@ class OpenAiAdapter implements SendImageAdapterInterface
                 'json' => $body
             ]);
 
-            return json_decode($response->getBody()->getContents(), true)['choices'][0]['message']['content'];
+            $decode = json_decode($response->getBody()->getContents(), true);
+
+            return json_decode($decode['choices'][0]['message']['content'], true);
         } catch (GuzzleException $e) {
             throw new Exception('Falha ao realizar a requisição: ' . $e->getMessage());
         }

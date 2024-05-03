@@ -12,7 +12,7 @@ class IntegrationService
     ) {
     }
 
-    public function analyze(InputCreateImage $dto): string
+    public function analyze(InputCreateImage $dto): array
     {
         return $this->adapter->analyzeImage($dto);
     }

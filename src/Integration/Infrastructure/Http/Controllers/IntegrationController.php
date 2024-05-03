@@ -17,6 +17,6 @@ class IntegrationController
     public function image(CreateImageRequest $request): JsonResponse
     {
         $data = $this->service->analyze($request->toDTO());
-        return new JsonResponse(['message' => $data], Response::HTTP_OK);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 }

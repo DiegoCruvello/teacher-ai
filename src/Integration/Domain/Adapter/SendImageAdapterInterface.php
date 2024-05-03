@@ -6,5 +6,5 @@ use TeacherAi\Integration\Application\DTO\InputCreateImage;
 
 interface SendImageAdapterInterface
 {
-    public function analyzeImage(InputCreateImage $dto): string;
+    public function analyzeImage(InputCreateImage $dto): array;
 }

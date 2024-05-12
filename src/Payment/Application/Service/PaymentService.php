@@ -2,6 +2,7 @@
 
 namespace TeacherAi\Payment\Application\Service;
 
+use App\Models\Order;
 use TeacherAi\Payment\Application\DTO\InputConfirmReceived;
 use TeacherAi\Payment\Application\DTO\InputCreateOrder;
 use TeacherAi\Payment\Domain\Entity\Boleto;
@@ -14,6 +15,7 @@ class PaymentService
 {
     public function __construct(
         public PaymentRepositoryInterface $repository,
+        public Order $order,
     ) {
     }
 

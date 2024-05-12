@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
+use TeacherAi\Auth\Infrastructure\Providers\AuthProvider;
 use TeacherAi\Integration\Infrastructure\Providers\IntegrationProvider;
 use TeacherAi\Payment\Infrastructure\Providers\PaymentProvider;
 
@@ -172,6 +173,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         PaymentProvider::class,
         IntegrationProvider::class,
+        AuthProvider::class,
     ])->toArray(),
 
     /*

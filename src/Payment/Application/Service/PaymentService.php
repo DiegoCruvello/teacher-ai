@@ -38,4 +38,9 @@ class PaymentService
     {
         return $this->repository->confirmReceivedBoleto($dto, $id);
     }
+
+    public function getPaymentStatus(string $paymentId): string
+    {
+        return $this->repository->getPaymentStatus($paymentId);
+    }
 }

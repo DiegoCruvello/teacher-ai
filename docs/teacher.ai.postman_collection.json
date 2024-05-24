@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "dfe9dda0-4168-4b2d-90b2-7ffff10ae8cf",
+		"name": "teacher.ai",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15667407"
+	},
+	"item": [
+		{
+			"name": "Client",
+			"item": [
+				{
+					"name": "Register Client",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"diego.cruvello@gmail.com\",\n    \"cpf\": \"16978861758\",\n    \"name\": \"Diego dos Santos Cruvello Davila\",\n    \"password\": \"Diego1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Client With Cpf or Cnpj",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/client/16978861758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"client",
+								"16978861758"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"diego.cruvello@gmail.com\",\n    \"password\": \"Diego1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Criar Cobrança Boleto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"billingType\": \"BOLETO\",\n  \"customer\": \"cus_000005796310\",\n  \"value\": 10.2,\n  \"dueDate\": \"2023-11-30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/boleto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"boleto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cobrança Pix",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|UM0mhsIHv4MlCxvKgLhmUTsHzWXubDcVelds9L4eb41df8d3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"billingType\": \"PIX\",\n  \"customer\": \"cus_000006008249\",\n  \"value\": 178.2,\n  \"dueDate\": \"2024-05-11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/pix",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"pix"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Cobrança Cartão de Crédito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"customer\": \"cus_000005796310\",\n      \"billingType\": \"CREDIT_CARD\",\n      \"value\": 100.00,\n      \"dueDate\": \"2023-12-21\",\n      \"creditCard\": {\n        \"holderName\": \"marcelo h almeida\",\n        \"number\": \"5162306219378829\",\n        \"expiryMonth\": \"05\",\n        \"expiryYear\": \"2024\",\n        \"ccv\": \"318\"\n      },\n      \"creditCardHolderInfo\": {\n        \"name\": \"Marcelo Henrique Almeida\",\n        \"email\": \"marcelo.almeida@gmail.com\",\n        \"cpfCnpj\": \"24971563792\",\n        \"postalCode\": \"89223-005\",\n        \"addressNumber\": \"277\",\n        \"addressComplement\": null,\n        \"phone\": \"4738010919\",\n        \"mobilePhone\": \"47998781877\"\n      }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/credit_card",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"credit_card"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirmar Boleto Recebido",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "1|UM0mhsIHv4MlCxvKgLhmUTsHzWXubDcVelds9L4eb41df8d3",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"paymentDate\": \"2024-05-11\",\n  \"value\": 178.20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/payment/confirm/received/pay_6tvbu43xhn5g52cd/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"payment",
+								"confirm",
+								"received",
+								"pay_6tvbu43xhn5g52cd",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Payment Status",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Integration",
+			"item": [
+				{
+					"name": "Request for Return values",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "5|maz4CgTCfe5wPmGVU6jcyUfID8DVSgoW2rDN6njA818e0cde",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/diego/Área de Trabalho/e31b4316-72be-4f80-bc13-e7d4d532d748.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/integration/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"integration",
+								"image"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -11,19 +11,19 @@ services:
             - .:/var/www/html
         command: php artisan serve --host=0.0.0.0 --port=8000
         environment:
-            DB_HOST: db
-            DB_DATABASE: laravel
-            DB_USERNAME: root
-            DB_PASSWORD: root
+            DB_HOST: teacher-ai.ctccwqauwd6r.us-east-1.rds.amazonaws.com
+            DB_DATABASE: teacher
+            DB_USERNAME: admin
+            DB_PASSWORD: Dicoxkv9.0EB
 
-    db:
-        image: mariadb:10.5
-        restart: always
-        environment:
-            MYSQL_DATABASE: laravel
-            MYSQL_ROOT_PASSWORD: root
-        volumes:
-            - dbdata:/var/lib/mysql
-
-volumes:
-    dbdata:
+#    db:
+#        image: mariadb:10.5
+#        restart: always
+#        environment:
+#            MYSQL_DATABASE: teacher
+#            MYSQL_ROOT_PASSWORD: Dicoxkv9.0EB
+#        volumes:
+#            - dbdata:/var/lib/mysql
+#
+#volumes:
+#    dbdata:

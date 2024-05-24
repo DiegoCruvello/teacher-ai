@@ -18,4 +18,5 @@ Route::prefix('payment')
         Route::post('/pix', [PaymentController::class, 'createOrderPix'])->name('payment.pix');
         Route::post('/credit_card', [PaymentController::class, 'createOrderCreditCard'])->name('payment.credit_card');
         Route::post('/confirm/received/{id}/{plan}', [PaymentController::class, 'confirmReceived'])->name('payment.confirm.received');
+        Route::get('/status/{paymentId}', [PaymentController::class, 'validatedStatusPayment'])->name('payment.status');
     });

@@ -10,6 +10,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TeacherAi\Payment\Application\Service\PaymentService;
 use TeacherAi\Payment\Domain\Exception\CustomerException;
 use TeacherAi\Payment\Domain\Exception\PaymentDomainException;
@@ -101,6 +102,20 @@ class PaymentController extends Controller
         } catch (ReceivedNotFound $e) {
             return PaymentResource::exception($e->getMessage(), Response::HTTP_NOT_FOUND);
         }
+    }
+
+    public function validatedStatusPayment(string $paymentId): JsonResponse
+    {
+        try {
+            $status = $this->service->getPaymentStatus($paymentId);
+            return new JsonResponse(['status' => $status], Response::HTTP_OK);
+        } catch (Exception $e){
+            if($e->getCode() === Response::HTTP_NOT_FOUND){
+                return new JsonResponse(['message' => 'Order not found'], Response::HTTP_NOT_FOUND);
+            }
+            return new JsonResponse(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
 
     protected function createSubscription(Order $order, int $plan): void

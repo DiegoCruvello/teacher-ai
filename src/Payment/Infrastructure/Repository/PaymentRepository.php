@@ -2,6 +2,8 @@
 
 namespace TeacherAi\Payment\Infrastructure\Repository;
 
+use App\Models\Order;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Response;
 use TeacherAi\Payment\Application\DTO\InputConfirmReceived;
@@ -19,7 +21,8 @@ use TeacherAi\Payment\Infrastructure\Client\Asaas;
 class PaymentRepository implements PaymentRepositoryInterface
 {
     public function __construct(
-        public Asaas $asaas
+        public Asaas $asaas,
+        private Order $model,
     ) {
     }
 
@@ -114,6 +117,34 @@ class PaymentRepository implements PaymentRepositoryInterface
             if($e->getCode() === Response::HTTP_NOT_FOUND){
                 throw new ReceivedNotFound('A fatura não foi encontrada', Response::HTTP_NOT_FOUND);
             }
+            throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function getPaymentStatus(string $paymentId): string
+    {
+        $statusDatabase = $this->model->where('payment_id', $paymentId);
+
+        if($statusDatabase === 'RECEIVED'){
+            return $statusDatabase;
+        }
+
+        try {
+            $resp = $this->asaas->getAsaasClient()->post("v3/payments/$paymentId");
+            $data = json_decode($resp->getBody()->getContents(), true);
+            $paymentId = $data['id'];
+            $order = $this->model->where('payment_id', $paymentId)->first();
+
+            if(!$order){
+                throw new PaymentDomainException('Order not found', Response::HTTP_NOT_FOUND);
+            }
+
+            if($data['status'] === 'RECEIVED'){
+                $this->model->where('payment_id', $paymentId)->update(['status' => $data['status']]);
+            }
+
+            return $data['status'];
+        } catch (GuzzleException $e) {
             throw new PaymentDomainException($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

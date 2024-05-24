@@ -14,5 +14,7 @@ interface PaymentRepositoryInterface
     public function createOrderBoleto(InputCreateOrder $dto): Boleto;
     public function createOrderPix(InputCreateOrder $dto): Pix;
     public function confirmReceivedBoleto(InputConfirmReceived $dto, string $id): Boleto|Pix;
+
+    public function getPaymentStatus(string $paymentId): string;
 }
 

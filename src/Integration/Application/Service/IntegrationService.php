@@ -2,18 +2,29 @@
 
 namespace TeacherAi\Integration\Application\Service;
 
+use App\Models\Subscription;
 use TeacherAi\Integration\Application\DTO\InputCreateImage;
 use TeacherAi\Integration\Domain\Adapter\SendImageAdapterInterface;
 
 class IntegrationService
 {
     public function __construct(
-      private readonly SendImageAdapterInterface $adapter,
+        private readonly SendImageAdapterInterface $adapter,
+        private readonly Subscription $model
     ) {
     }
 
-    public function analyze(InputCreateImage $dto): array
+    public function analyze(InputCreateImage $dto, int $id): array
     {
-        return $this->adapter->analyzeImage($dto);
+        $usage = $this->model->where('id', $id)->first();
+
+        if ($usage && $usage->current_usage > 0) {
+            $data = $this->adapter->analyzeImage($dto);
+            $usage->current_usage -= 1;
+            $usage->save();
+            return $data;
+        }
+
+        return [];
     }
 }

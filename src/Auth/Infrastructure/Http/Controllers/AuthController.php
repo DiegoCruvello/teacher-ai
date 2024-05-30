@@ -23,18 +23,17 @@ class AuthController
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'email' => 'required|email|unique:users,email',
-            'cpf' => 'required|max:11|unique:users,cpf',
             'password' => 'required|min:8'
         ]);
 
         try {
-            $client = $this->clientService->create(new InputCreateClient($validatedData['name'], $validatedData['cpf']));
+//            $client = $this->clientService->create(new InputCreateClient($validatedData['name'], $validatedData['cpf']));
 
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
-                'cpf' => $validatedData['cpf'],
-                'external_id' => $client->id,
+//                'cpf' => $validatedData['cpf'],
+//                'external_id' => $client->id,
                 'password' => Hash::make($validatedData['password']),
             ]);
 

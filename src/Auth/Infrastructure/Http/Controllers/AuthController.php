@@ -42,7 +42,7 @@ class AuthController
             return response()->json([
                 'access_token' => $token,
                 'token_type' => 'Bearer',
-            ]);
+            ], 201);
         } catch (Exception $exception) {
             return response()->json(['error' => $exception->getMessage()], 500);
         }

@@ -7,4 +7,5 @@ Route::prefix('integration')
     ->middleware('auth:sanctum')
     ->group(function () {
         Route::post('/image', [IntegrationController::class, 'image'])->name('integration.image');
+        Route::get('/quantity', [IntegrationController::class, 'getLimitUsage'])->name('integration.quantity');
     });

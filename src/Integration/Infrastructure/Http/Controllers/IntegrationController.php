@@ -20,4 +20,10 @@ class IntegrationController
         $data = $this->service->analyze($request->toDTO(), Auth::user()->id);
         return new JsonResponse($data, Response::HTTP_OK);
     }
+
+    public function getLimitUsage(): JsonResponse
+    {
+        $quantity = $this->service->getLimitUsage(Auth::user()->id);
+        return new JsonResponse(['usage' => $quantity], Response::HTTP_OK);
+    }
 }

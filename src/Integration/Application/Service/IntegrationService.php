@@ -27,4 +27,9 @@ class IntegrationService
 
         return [];
     }
+
+    public function getLimitUsage(int $id): int
+    {
+        return $this->model->where('id', $id)->first()->current_usage;
+    }
 }

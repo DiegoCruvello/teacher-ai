@@ -16,7 +16,7 @@ class IntegrationService
 
     public function analyze(InputCreateImage $dto, int $id): array
     {
-        $usage = $this->model->where('id', $id)->first();
+        $usage = $this->model->where('user_id', $id)->first();
 
         if ($usage && $usage->current_usage > 0) {
             $data = $this->adapter->analyzeImage($dto);

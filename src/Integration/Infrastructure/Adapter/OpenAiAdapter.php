@@ -34,7 +34,8 @@ class OpenAiAdapter implements SendImageAdapterInterface
                             de acordo com o GTO. Forneça sua avaliação apenas sobre a qualidade da jogada. Ao final,
                             dê-me a melhor sugestão para ser usada no Flop, Turn e River. Retorne um json e cada índice deve ser
                             o flop, river e turn. Indíces adionais também podem ser criados para exibir mensagens para o usuário.
-                            Não precisa exemplificar que é um json, somente retornar um json com chave valor, somente.'
+                            Não precisa exemplificar que é um json, somente retornar um json com chave valor, somente.
+                            Se atente que o flop sempre são as 3 primeiras cartas da esquerda para a direita.'
                         ],
                         [
                             'type' => 'image_url',

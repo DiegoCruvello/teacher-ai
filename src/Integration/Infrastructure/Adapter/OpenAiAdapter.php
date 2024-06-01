@@ -34,9 +34,9 @@ class OpenAiAdapter implements SendImageAdapterInterface
                             4. Dê a melhor sugestão de jogada para o Flop, Turn e River.
 
                             Retorne suas avaliações e sugestões em formato JSON com as seguintes chaves:
-                            - flop: (Três primeiras cartas comunitárias, jogada recomendada e justificativa)
-                            - turn: (Quarta carta comunitária, jogada recomendada e justificativa)
-                            - river: (Quinta carta comunitária, jogada recomendada e justificativa)
+                            - flop: (Três primeiras cartas comunitárias, jogada recomendada e justificativa, não falar o naipe da carta)
+                            - turn: (Quarta carta comunitária, jogada recomendada e justificativa, não falar o naipe da carta)
+                            - river: (Quinta carta comunitária, jogada recomendada e justificativa, não falar o naipe da carta)
                             - mensagem: (Mensagem geral para o usuário)
 
                             Retorne um JSON e cada índice deve ser o flop, turn e river. Índices adicionais também podem ser criados para exibir mensagens para o usuário. Não precisa exemplificar que é um JSON, somente retornar um JSON com chave valor.

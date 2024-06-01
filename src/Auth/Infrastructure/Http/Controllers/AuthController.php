@@ -2,6 +2,7 @@
 
 namespace TeacherAi\Auth\Infrastructure\Http\Controllers;
 
+use App\Models\Subscription;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ use TeacherAi\Payment\Application\Service\ClientService;
 class AuthController
 {
     public function __construct(
-        private ClientService $clientService
+        private ClientService $clientService,
+        private Subscription $modelSubscription,
     ) {
     }
 
@@ -35,6 +37,12 @@ class AuthController
 //                'cpf' => $validatedData['cpf'],
 //                'external_id' => $client->id,
                 'password' => Hash::make($validatedData['password']),
+            ]);
+
+            $this->modelSubscription->create([
+                'user_id' => $user->id,
+                'plan_id' => 1,
+                'current_usage' => 10
             ]);
 
             $token = $user->createToken('auth_token')->plainTextToken;
